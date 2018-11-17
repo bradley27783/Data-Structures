@@ -64,27 +64,6 @@ void pre_order(BinTreeNode* tree) {
     }
 }
 
-BinTreeNode* find_Node(BinTreeNode* tree, std::string target){ 
-    std::cout<<tree->value<<std::endl;
-    
-    if(tree == NULL){
-        std::cout << "Node Not Found!" << std::endl;
-        return tree;
-    }
-    
-    else if(tree->value == target){
-        std::cout << "Node Found!" << std::endl;
-        return tree;
-    }
-    else if(tree->value > target)
-        find_Node(tree->left, target);
-
-    else{
-        find_Node(tree->right,target);
-    }
-}
-
-
 BinTreeNode* findMin(BinTreeNode* tree){
     while(tree->left != NULL){
         tree = tree->left;
@@ -99,6 +78,28 @@ BinTreeNode* findMax(BinTreeNode* tree){
     return tree;
 }
 
+BinTreeNode* find_Node(BinTreeNode* tree, std::string target) {
+    std::cout << tree->value << std::endl;
+    
+    if (tree == NULL){
+        std::cout << "Node Not Found!" << std::endl;
+        return tree;
+    }
+    
+    else if (tree->value == target){
+        std::cout << "Node found!" << std::endl;
+        return tree;                          
+    }
+    
+    else if (tree->value > target){
+        return find_Node(tree->left, target);
+    }
+    
+    else{ 
+        return find_Node(tree->right, target);
+    }
+}
+
 BinTreeNode* deletion(BinTreeNode* tree){
     if(tree != NULL){
         BinTreeNode* parent = tree->parent;
@@ -107,7 +108,6 @@ BinTreeNode* deletion(BinTreeNode* tree){
         
         //Node to be deleted is a leaf
         if(tree->left == NULL && tree->right == NULL){
-            std::cout << "1" << std::endl;
             if(parent->left != tree && parent->right == tree){
                 delete tree;
                 parent->right = NULL;
@@ -120,7 +120,6 @@ BinTreeNode* deletion(BinTreeNode* tree){
         
         //Node to be deleted has a subtree on the right
         else if(tree->left == NULL && tree->right != NULL){
-            std::cout << "2" << std::endl;
             if(parent->left != tree && parent->right == tree){
                 delete tree;
                 parent->right = tree->right;
@@ -133,7 +132,6 @@ BinTreeNode* deletion(BinTreeNode* tree){
         
         //Node to be deleted has a subtree on the left
         else if(tree->left != NULL && tree->right == NULL){
-            std::cout << "3" << std::endl;
             if(parent->left != tree && parent->right == tree){
                 delete tree;
                 parent->right = tree->left;
@@ -146,7 +144,6 @@ BinTreeNode* deletion(BinTreeNode* tree){
         
         //Node to be deleted has a subtree on both sides
         else{         
-            std::cout << "4" << std::endl;
             min = findMin(tree->right);
             tree->value = min->value;
             delete min;
@@ -192,11 +189,25 @@ int main(int argc, char *argv[])
     for(int i = 1; i < text.size(); i++){
         tree_insert(t,text[i]);
     }
-    //find_Node(t,"single");
     
+    /*tree_insert(t, "cat");
+    tree_insert(t, "blame");
+    tree_insert(t, "going");
+    tree_insert(t, "apple");
+    tree_insert(t, "bob");
+    tree_insert(t, "fair");
+    tree_insert(t, "in");
+    tree_insert(t, "store");
+    tree_insert(t, "november");
+    tree_insert(t, "to");
+    tree_insert(t, "make");
+    tree_insert(t, "sale");
+    tree_insert(t, "the");
+    tree_insert(t, "trip");*/
+        
 	in_order(t);
     std::cout << "----------------------------------" << std::endl;
-	deletion(find_Node(t,"zebra"));
+	deletion(find_Node(t,"store"));
     std::cout << "----------------------------------" << std::endl;
     in_order(t);
 	return 0;
