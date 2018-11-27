@@ -36,33 +36,37 @@ int degree(GraphNode* node){
 std::vector<GraphNode*> is_Path(GraphNode* start, GraphNode* end){
     //"""Takes two GraphNode* and returns the path between the two"""
     
-    Stack* s = new Stack();
-    std::vector<GraphNode*> visited;
-    s->push(start);
-
-    while(s->stack.size() > 0){ //Iterate until the stack is empty
-        GraphNode* top = s->pop();
-
-        if(!in_Visited(top, visited)){ /* Calls the in_Visited() function 
-                                        * which returns true if top is in visited */
-            visited.push_back(top);
-
-            std::cout << top->value << std::endl;
-
-            if(top == end){ // Exit case if end is found
-                return visited;
+    Queue* q = new Queue();
+    std::vector<GraphNode*> visited; 
+    std::vector<GraphNode*> path;
+    
+    q->enqueue(start);
+    
+    while(q->queue.size() > 0){ //Iterate until the queue is empty
+        GraphNode* bottom = q->dequeue();
+        
+        if(!in_Visited(bottom, visited)){  //Calls the in_Visited() function
+            visited.push_back(bottom);     //which returns true if top is in visited
+            std::cout << bottom->value << " ";
+            
+            if(degree(bottom) > 0){ // if the node has no neighbours then it's not part of the path
+                path.push_back(bottom);
             }
-
-            else{                
-                for(int i = 0; i < degree(top); i++){
-                    s->push(top->adjacencyList[i]);     // Calls the degree function
-                                                        // then appends all the nodes 
-                                                        // neighbours to the stack
-                }
+            
+            if(bottom == end){
+                std::cout << std::endl;
+                return path;
             }
+            
+            for(int i = 0; i < degree(bottom); i++){  // Calls the degree function 
+                q->enqueue(bottom->adjacencyList[i]); // then appends all the nodes 
+                                                      // neighbours to the stack
+            }
+            std::cout << std::endl;
         }
     }
-    return visited;
+    
+    return path;
 }
 
 std::vector<GraphNode*> depth_First(GraphNode* start){
@@ -186,12 +190,16 @@ int main(){
     add_Edge(g->get_Node(2),g->get_Node(3));
     add_Edge(g->get_Node(3),g->get_Node(4));
     
-    
-    write(is_Path(g->get_Node(0),g->get_Node(2)),"path.txt");
-    
+    std::cout << "Depth First" << std::endl;
     write(depth_First(g->get_Node(0)),"DFS.txt");
+    
+    std::cout << "Breadth First" << std::endl;
     write(breadth_First(g->get_Node(0)),"BFS.txt");
     
+    std::cout << "Path Finding" << std::endl;
+    write(is_Path(g->get_Node(0),g->get_Node(4)),"path.txt");
+    
+    std::cout << "Connected Graph?" << std::endl;
     is_Connected(g);
 
     //g->print_Graph();
