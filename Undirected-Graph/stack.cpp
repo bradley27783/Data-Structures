@@ -11,7 +11,7 @@ void Stack::push(GraphNode* value){
 GraphNode* Stack::pop(){
     //"""Remove top element from the stack and returns GraphNode* value"""
 
-    if(stack.size() != 0){
+    if(stack.size() > 0){
         GraphNode* top = stack.back();
         stack.pop_back();
         return top;

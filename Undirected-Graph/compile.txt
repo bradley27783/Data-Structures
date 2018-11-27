@@ -1,2 +1,1 @@
-
-g++ --std=c++14 main.cpp graph.cpp graphNode.cpp stack.cpp -o main
+g++ --std=c++14 main.cpp graph.cpp graphNode.cpp stack.cpp queue.cpp -o main && ./main
