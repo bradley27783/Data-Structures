@@ -1,7 +1,7 @@
 #include "bst.hpp"
 
 BinTreeNode* tree_insert(BinTreeNode* tree, std::string item) {
-    """Takes a """;
+    //"""Takes two parameters tree and item then add the item to the tree""";
         
 	if (tree == NULL)
 		tree = new BinTreeNode(item, NULL);
