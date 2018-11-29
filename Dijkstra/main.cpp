@@ -25,6 +25,14 @@ void add_Edge(GraphNode* node_One, GraphNode* node_Two, int weight){
     node_Two->adjacencyList[node_One] = weight;
 }
 
+
+/*
+Title: Dijkstra's Psuedocode
+Author: Diana Hintea
+Date: 2018
+Availability: http://moodle.coventry.ac.uk
+*/
+
 std::vector<int> dijkstra(Graph* graph, GraphNode* start, GraphNode* end){
     //"""Takes 3 parameters - Graph, start, end
     //Graph is the graph data structure you want to navigate
