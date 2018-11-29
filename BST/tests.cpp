@@ -25,13 +25,13 @@ bool suite_MyTestSuite_init = false;
 static MyTestSuite suite_MyTestSuite;
 
 static CxxTest::List Tests_MyTestSuite = { 0, 0 };
-CxxTest::StaticSuiteDescription suiteDescription_MyTestSuite( "MyTestSuite.h", 3, "MyTestSuite", suite_MyTestSuite, Tests_MyTestSuite );
+CxxTest::StaticSuiteDescription suiteDescription_MyTestSuite( "MyTestSuite.h", 5, "MyTestSuite", suite_MyTestSuite, Tests_MyTestSuite );
 
-static class TestDescription_suite_MyTestSuite_testAddition : public CxxTest::RealTestDescription {
+static class TestDescription_suite_MyTestSuite_test_delete_Leaf : public CxxTest::RealTestDescription {
 public:
- TestDescription_suite_MyTestSuite_testAddition() : CxxTest::RealTestDescription( Tests_MyTestSuite, suiteDescription_MyTestSuite, 6, "testAddition" ) {}
- void runTest() { suite_MyTestSuite.testAddition(); }
-} testDescription_suite_MyTestSuite_testAddition;
+ TestDescription_suite_MyTestSuite_test_delete_Leaf() : CxxTest::RealTestDescription( Tests_MyTestSuite, suiteDescription_MyTestSuite, 18, "test_delete_Leaf" ) {}
+ void runTest() { suite_MyTestSuite.test_delete_Leaf(); }
+} testDescription_suite_MyTestSuite_test_delete_Leaf;
 
 #include <cxxtest/Root.cpp>
 const char* CxxTest::RealWorldDescription::_worldName = "cxxtest";

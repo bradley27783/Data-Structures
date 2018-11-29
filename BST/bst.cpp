@@ -1,28 +1,15 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
-
-
-class BinTreeNode {
-public:
-	BinTreeNode(std::string value, BinTreeNode* parent) {
-		this->value = value;
-		this->left = NULL;
-		this->right = NULL;
-        this->parent = parent;
-	}
-	std::string value;
-	BinTreeNode* left;
-	BinTreeNode* right;
-    BinTreeNode* parent;
-};
+#include "bst.hpp"
 
 BinTreeNode* tree_insert(BinTreeNode* tree, std::string item) {
+    """Takes a """;
+        
 	if (tree == NULL)
 		tree = new BinTreeNode(item, NULL);
 	else
-		if (item < tree->value)
+        if(tree->value == item){
+            tree->frequency++;
+        }
+		else if (item < tree->value)
 			if (tree->left == NULL)
 				tree->left = new BinTreeNode(item,tree);
 			else
@@ -49,6 +36,7 @@ void in_order(BinTreeNode* tree) {
 		in_order(tree->left);
     }
 	std::cout << tree->value << std::endl;
+    std::cout << tree->frequency << std::endl;
 	if (tree->right != NULL){
 		in_order(tree->right);
     }
@@ -79,11 +67,11 @@ BinTreeNode* findMax(BinTreeNode* tree){
 }
 
 BinTreeNode* find_Node(BinTreeNode* tree, std::string target) {
-    std::cout << tree->value << std::endl;
+    std::cout << "Value: " << tree->value << "    " << tree->frequency << std::endl;
     
     if (tree == NULL){
-        std::cout << "Node Not Found!" << std::endl;
-        return tree;
+        std::cout << "No Tree Given!" << std::endl;
+        return NULL;
     }
     
     else if (tree->value == target){
@@ -92,11 +80,21 @@ BinTreeNode* find_Node(BinTreeNode* tree, std::string target) {
     }
     
     else if (tree->value > target){
-        return find_Node(tree->left, target);
+        if(tree->left == NULL){
+            std::cout << "Node not found!" << std::endl;
+            return NULL;
+        }
+        else
+            return find_Node(tree->left, target);
     }
     
     else{ 
-        return find_Node(tree->right, target);
+        if(tree->right == NULL){
+            std::cout << "Node not found!" << std::endl;
+            return NULL;
+        }
+        else
+            return find_Node(tree->right, target);
     }
 }
 
@@ -157,14 +155,14 @@ BinTreeNode* deletion(BinTreeNode* tree){
         }                
     }
     else 
-        std::cout << "No Tree!" << std::endl;
+        std::cout << "Could Not Perform Deletion: No Tree Given!" << std::endl;
 }
 
-std::vector<std::string> read_Text(){
-    std::vector<std::string> words;
-    
+std::vector<std::string> read_Text(const char* fileName){
+    std::vector<std::string> words;   
     std::ifstream file;
-    file.open("paragraph.txt");
+    
+    file.open(fileName);
     
     if(file.is_open()){
         std::string word;
@@ -175,40 +173,25 @@ std::vector<std::string> read_Text(){
     }
     else
         std::cout << "Cannot Open The File!" << std::endl;    
-} 
-
-
-
-
-int main(int argc, char *argv[])
-{
-    std::vector<std::string> text = read_Text();
-    
-    
-	BinTreeNode* t = tree_insert(0, text[0]);
-    for(int i = 1; i < text.size(); i++){
-        tree_insert(t,text[i]);
-    }
-    
-    /*tree_insert(t, "cat");
-    tree_insert(t, "blame");
-    tree_insert(t, "going");
-    tree_insert(t, "apple");
-    tree_insert(t, "bob");
-    tree_insert(t, "fair");
-    tree_insert(t, "in");
-    tree_insert(t, "store");
-    tree_insert(t, "november");
-    tree_insert(t, "to");
-    tree_insert(t, "make");
-    tree_insert(t, "sale");
-    tree_insert(t, "the");
-    tree_insert(t, "trip");*/
-        
-	in_order(t);
-    std::cout << "----------------------------------" << std::endl;
-	deletion(find_Node(t,"store"));
-    std::cout << "----------------------------------" << std::endl;
-    in_order(t);
-	return 0;
 }
+
+
+
+/*int main(int argc, char *argv[])
+{
+    
+    std::vector<std::string> text = read_Text("paragraph.txt");
+    
+    
+	BinTreeNode* tree = tree_insert(0, text[0]);
+    for(int i = 1; i < text.size(); i++){
+        tree_insert(tree,text[i]);
+    }
+        
+	in_order(tree);
+    std::cout << "----------------------------------" << std::endl;
+	deletion(find_Node(tree,"in"));
+    std::cout << "----------------------------------" << std::endl;
+    in_order(tree);
+	return 0;
+}*/
