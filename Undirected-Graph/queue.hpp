@@ -5,7 +5,6 @@
 
 
 class Queue{
-    //"""FIFO datastructure for GraphNode*"""
     
 public:
     std::vector<GraphNode*> queue;
@@ -13,6 +12,10 @@ public:
     void enqueue(GraphNode* value);
     
     GraphNode* dequeue();
+    
+    GraphNode* find_Min();
+    
+    void change_Priority(GraphNode* value);
     
     void print();
 };

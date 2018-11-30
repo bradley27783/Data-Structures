@@ -6,10 +6,16 @@
 GraphNode* Graph::add_Node(int value){
     //"""Creates a new node and adds it to the Graph"""
     //"""Returns a pointer to a new node"""
-
-    GraphNode* graph_Node = new GraphNode(value);
-    Nodes.push_back(graph_Node);
-    return graph_Node;
+    
+    if(get_Node(value) != NULL){
+        std::cout << "Node Already Exists!" << std::endl;
+        return NULL;
+    }
+    else{  
+        GraphNode* graph_Node = new GraphNode(value);
+        Nodes.push_back(graph_Node);
+        return graph_Node;
+    }
 }
 
 GraphNode* Graph::get_Node(int val){
@@ -20,6 +26,7 @@ GraphNode* Graph::get_Node(int val){
             return Nodes[i];
         }
     }
+    return NULL;
 }   
 void Graph::print_Graph(){
     //"""Prints all GraphNode values that exist in Nodes vector"""

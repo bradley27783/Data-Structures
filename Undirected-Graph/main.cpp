@@ -20,11 +20,27 @@ bool in_Visited(GraphNode* value, std::vector<GraphNode*> visited){
     return false;
 }
 
+
+bool already_Adjacent(GraphNode* node_One, GraphNode* node_Two){
+    for(int i = 0; i < node_One->adjacencyList.size(); i++){
+        if(node_One->adjacencyList[i] == node_Two)
+            return true;
+    }
+    return false;
+           
+}
+
+
 void add_Edge(GraphNode* node_One, GraphNode* node_Two){
     //"""Takes new GraphNode* and appends each other to the adjacencyList"""
+    
+    if(!already_Adjacent(node_One,node_Two)){
         node_One->adjacencyList.push_back(node_Two);
         node_Two->adjacencyList.push_back(node_One);
     }
+    else
+        std::cout << "That Edge Already Exists!" << std::endl; 
+}
 
 
 int degree(GraphNode* node){
@@ -38,7 +54,6 @@ std::vector<GraphNode*> is_Path(GraphNode* start, GraphNode* end){
     
     Queue* q = new Queue();
     std::vector<GraphNode*> visited; 
-    std::vector<GraphNode*> path;
     
     q->enqueue(start);
     
@@ -47,26 +62,21 @@ std::vector<GraphNode*> is_Path(GraphNode* start, GraphNode* end){
         
         if(!in_Visited(bottom, visited)){  //Calls the in_Visited() function
             visited.push_back(bottom);     //which returns true if top is in visited
-            std::cout << bottom->value << " ";
+            std::cout << bottom->value << std::endl;
             
-            if(degree(bottom) > 0){ // if the node has no neighbours then it's not part of the path
-                path.push_back(bottom);
-            }
-            
-            if(bottom == end){
-                std::cout << std::endl;
-                return path;
-            }
-            
-            for(int i = 0; i < degree(bottom); i++){  // Calls the degree function 
+            for(int i = 0; i < degree(bottom); i++){
+                if(bottom->adjacencyList[i] == end){
+                    std::cout << bottom->adjacencyList[i]->value << std::endl;
+                    visited.push_back(bottom->adjacencyList[i]);
+                    return visited;
+                }                                     // Calls the degree function 
                 q->enqueue(bottom->adjacencyList[i]); // then appends all the nodes 
                                                       // neighbours to the stack
             }
-            std::cout << std::endl;
         }
     }
     
-    return path;
+    return visited;
 }
 
 std::vector<GraphNode*> depth_First(GraphNode* start){
@@ -99,17 +109,18 @@ std::vector<GraphNode*> depth_First(GraphNode* start){
 
 
 std::vector<GraphNode*> breadth_First(GraphNode* start){
+        
     Queue* q = new Queue();
     std::vector<GraphNode*> visited;  
     q->enqueue(start);
-    
+
     while(q->queue.size() > 0){ //Iterate until the queue is empty
         GraphNode* bottom = q->dequeue();
-        
+
         if(!in_Visited(bottom, visited)){  //Calls the in_Visited() function
             visited.push_back(bottom);     //which returns true if top is in visited
             std::cout << bottom->value << " ";
-            
+
             for(int i = 0; i < degree(bottom); i++){  // Calls the degree function 
                 q->enqueue(bottom->adjacencyList[i]); // then appends all the nodes 
                                                       // neighbours to the stack
@@ -182,6 +193,7 @@ int main(){
         GraphNode* node = g->add_Node(i);
         //std::cout << node->value << std::endl;
     }
+    //g->add_Node(3);
     
     add_Edge(g->get_Node(0),g->get_Node(1));
     add_Edge(g->get_Node(0),g->get_Node(3));
