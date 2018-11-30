@@ -66,9 +66,7 @@ BinTreeNode* findMax(BinTreeNode* tree){
     return tree;
 }
 
-BinTreeNode* find_Node(BinTreeNode* tree, std::string target) {
-    std::cout << "Value: " << tree->value << "    " << tree->frequency << std::endl;
-    
+BinTreeNode* find_Node(BinTreeNode* tree, std::string target) {   
     if (tree == NULL){
         std::cout << "No Tree Given!" << std::endl;
         return NULL;
@@ -100,6 +98,7 @@ BinTreeNode* find_Node(BinTreeNode* tree, std::string target) {
 
 BinTreeNode* deletion(BinTreeNode* tree){
     if(tree != NULL){
+        std::cout << "Tree: "  << tree->value << std::endl;
         BinTreeNode* parent = tree->parent;
         BinTreeNode* min;
         BinTreeNode* max;
@@ -177,7 +176,7 @@ std::vector<std::string> read_Text(const char* fileName){
 
 
 
-/*int main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     
     std::vector<std::string> text = read_Text("paragraph.txt");
@@ -186,12 +185,13 @@ std::vector<std::string> read_Text(const char* fileName){
 	BinTreeNode* tree = tree_insert(0, text[0]);
     for(int i = 1; i < text.size(); i++){
         tree_insert(tree,text[i]);
-    }
-        
-	in_order(tree);
+    } 
+    
     std::cout << "----------------------------------" << std::endl;
-	deletion(find_Node(tree,"in"));
+    in_order(tree);
+    std::cout << "----------------------------------" << std::endl;
+    deletion(find_Node(tree,"in"));
     std::cout << "----------------------------------" << std::endl;
     in_order(tree);
 	return 0;
-}*/
+}
